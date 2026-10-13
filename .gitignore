@@ -1,0 +1,4 @@
+bin/
+*.class
+sales.txt
+sources.txt
