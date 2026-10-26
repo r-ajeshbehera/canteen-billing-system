@@ -12,7 +12,15 @@ In our college canteen, bills were written by hand and the queue was always long
 - Max 20 of one item per order; wrong input doesn't crash the program
 
 ## Tech
-Java 17 only (no database, no external libraries)
+Java 17 only (no database, no external libraries). Web version: plain Java (JDK built-in `HttpServer`, no framework) + HTML, CSS and JavaScript.
+
+## Two ways to use it
+| Version | Start with | What you get |
+|---|---|---|
+| Console | `run.bat` | Menu in the terminal (the original version) |
+| Web | `run-web.bat` | Ordering screen in the browser at http://localhost:8090 |
+
+Both use the same OOP classes and the same `sales.txt`. `run-web.bat` copies 25 dummy orders from `sample-data/sales.txt` the first time, so the report has data.
 
 ## Project structure
 ```
@@ -24,16 +32,40 @@ canteen-billing-system/
 │   ├── billing/Billable.java             interface
 │   ├── billing/Order.java                one customer's order and bill
 │   ├── exception/InvalidQuantityException.java
-│   └── service/Canteen.java              menu, tokens, file save, sales report
-└── run.bat                               compile + run on Windows
+│   ├── service/Canteen.java              menu, tokens, file save
+│   ├── service/SalesReport.java          totals read from sales.txt
+│   └── web/
+│       ├── WebServer.java                REST API + serves the web pages
+│       ├── HttpUtil.java                 read requests, send JSON / files
+│       └── Json.java                     JSON helpers
+├── web/                                  frontend: index.html, style.css, app.js
+├── sample-data/sales.txt                 25 dummy orders
+├── run.bat                               console version
+└── run-web.bat                           web version
 ```
 
 ## How to run
-Double-click `run.bat`, or in the terminal:
+Web version: double-click `run-web.bat`. The browser opens http://localhost:8090.
+
+Console version: double-click `run.bat`, or in the terminal:
 ```
 javac -d bin src\com\rajesh\canteen\*.java src\com\rajesh\canteen\model\*.java src\com\rajesh\canteen\billing\*.java src\com\rajesh\canteen\exception\*.java src\com\rajesh\canteen\service\*.java
 java -cp bin com.rajesh.canteen.Main
 ```
+
+## Web version
+- **New order:** menu cards filtered by category (with GST rate), + / − buttons, live subtotal, GST and total
+- **Place order:** confirm, then the server builds the `Order`, saves it to `sales.txt` and returns the bill with a token number
+- **Sales report:** total orders, revenue, best seller and item-wise sales bars
+
+REST API (all JSON):
+| Method | Path | Does |
+|---|---|---|
+| GET | `/api/menu` | all items with category, price and GST rate |
+| POST | `/api/order` | `items=1:2,5:3` (item id : quantity) → saves the order, returns the bill |
+| GET | `/api/report` | total orders, revenue, best seller, item-wise sales |
+
+The server checks the order again: unknown items and quantities over 20 are rejected using `InvalidQuantityException`, and a wrong order doesn't use up a token number. Token numbers continue after the last saved order, even after a restart.
 
 ## OOP used
 | Concept | Where |
@@ -47,4 +79,4 @@ java -cp bin com.rajesh.canteen.Main
 ## Ideas for next version
 - Daily stock limit for each item
 - Student discount
-- Web interface
+- Date-wise reports

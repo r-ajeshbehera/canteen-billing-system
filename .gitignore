@@ -1,4 +1,6 @@
 bin/
 *.class
-sales.txt
+/sales.txt
 sources.txt
+
+Claude outputs/

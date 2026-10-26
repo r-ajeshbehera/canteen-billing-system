@@ -1,0 +1,48 @@
+101,Lassi,1,33.60
+101,Veg Sandwich,1,31.50
+102,Veg Thali,1,63.00
+102,Cold Coffee,1,44.80
+102,Lassi,1,33.60
+103,Tea,3,33.60
+103,Samosa,2,31.50
+104,Veg Puff,1,21.00
+105,Masala Dosa,3,157.50
+106,Cold Coffee,2,89.60
+107,Lemon Soda,1,28.00
+108,Aloo Chop,1,15.75
+108,Samosa,3,47.25
+108,Egg Curry Rice,2,147.00
+109,Veg Puff,3,63.00
+109,Egg Curry Rice,1,73.50
+109,Cold Coffee,2,89.60
+110,Tea,1,11.20
+111,Veg Thali,2,126.00
+111,Samosa,2,31.50
+111,Masala Dosa,2,105.00
+112,Lassi,1,33.60
+112,Veg Sandwich,3,94.50
+112,Samosa,1,15.75
+113,Cold Coffee,3,134.40
+114,Aloo Chop,2,31.50
+114,Chicken Biryani,3,346.50
+115,Veg Thali,2,126.00
+116,Chicken Biryani,1,115.50
+117,Tea,1,11.20
+117,Lemon Soda,3,84.00
+118,Veg Puff,5,105.00
+118,Samosa,2,31.50
+119,Veg Puff,2,42.00
+119,Veg Thali,5,315.00
+120,Veg Thali,3,189.00
+120,Chicken Biryani,3,346.50
+120,Samosa,2,31.50
+121,Chicken Biryani,2,231.00
+121,Aloo Chop,1,15.75
+122,Veg Sandwich,2,63.00
+122,Cold Coffee,1,44.80
+123,Veg Puff,1,21.00
+124,Samosa,1,15.75
+124,Veg Sandwich,1,31.50
+124,Aloo Chop,2,31.50
+125,Tea,2,22.40
+125,Aloo Chop,3,47.25

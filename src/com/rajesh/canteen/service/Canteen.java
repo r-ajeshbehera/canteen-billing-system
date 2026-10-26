@@ -4,10 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import com.rajesh.canteen.billing.Order;
@@ -16,7 +14,7 @@ import com.rajesh.canteen.model.FoodItem;
 import com.rajesh.canteen.model.Meal;
 import com.rajesh.canteen.model.Snack;
 
-public class Canteen {
+public final class Canteen {
     private static final String SALES_FILE = "sales.txt";
 
     // TreeMap keeps the menu sorted by item id
@@ -30,6 +28,19 @@ public class Canteen {
         addToMenu(new Snack(4, "Veg Sandwich", 30));
         addToMenu(new Beverage(5, "Tea", 10));
         addToMenu(new Beverage(6, "Cold Coffee", 40));
+        addToMenu(new Meal(7, "Masala Dosa", 50));
+        addToMenu(new Meal(8, "Chicken Biryani", 110));
+        addToMenu(new Snack(9, "Veg Puff", 20));
+        addToMenu(new Snack(10, "Aloo Chop", 15));
+        addToMenu(new Beverage(11, "Lassi", 30));
+        addToMenu(new Beverage(12, "Lemon Soda", 25));
+
+        // continue token numbers after the last saved order,
+        // so tokens don't repeat when the program is restarted
+        SalesReport old = getReport();
+        if (old != null && old.getLastToken() >= nextToken) {
+            nextToken = old.getLastToken() + 1;
+        }
     }
 
     private void addToMenu(FoodItem item) {
@@ -38,6 +49,10 @@ public class Canteen {
 
     public FoodItem findItem(int id) {
         return menu.get(id);
+    }
+
+    public Collection<FoodItem> getMenu() {
+        return menu.values();
     }
 
     public void showMenu() {
@@ -64,11 +79,9 @@ public class Canteen {
         }
     }
 
-    public void showSalesReport() {
-        Map<String, Integer> qtyByItem = new HashMap<>();
-        Set<String> tokens = new HashSet<>();
-        double revenue = 0;
-
+    // reads sales.txt; returns null if there are no sales yet
+    public SalesReport getReport() {
+        SalesReport report = new SalesReport();
         try (BufferedReader br = new BufferedReader(new FileReader(SALES_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -76,27 +89,28 @@ public class Canteen {
                 if (p.length != 4) {
                     continue; // skip a broken line instead of crashing
                 }
-                tokens.add(p[0]);
-                qtyByItem.merge(p[1], Integer.parseInt(p[2]), Integer::sum);
-                revenue += Double.parseDouble(p[3]);
+                try {
+                    report.addLine(Integer.parseInt(p[0].trim()), p[1].trim(),
+                            Integer.parseInt(p[2].trim()), Double.parseDouble(p[3].trim()));
+                } catch (NumberFormatException ex) {
+                    // skip a line with bad numbers
+                }
             }
         } catch (IOException ex) {
+            return null;
+        }
+        return report;
+    }
+
+    public void showSalesReport() {
+        SalesReport r = getReport();
+        if (r == null || r.getTotalOrders() == 0) {
             System.out.println("No sales yet.");
             return;
         }
-
-        String best = null;
-        int bestQty = 0;
-        for (Map.Entry<String, Integer> e : qtyByItem.entrySet()) {
-            if (e.getValue() > bestQty) {
-                best = e.getKey();
-                bestQty = e.getValue();
-            }
-        }
-
         System.out.println("------- SALES REPORT -------");
-        System.out.println("Total orders : " + tokens.size());
-        System.out.printf("Total revenue: Rs %.2f%n", revenue);
-        System.out.println("Best seller  : " + best + " (" + bestQty + " sold)");
+        System.out.println("Total orders : " + r.getTotalOrders());
+        System.out.printf("Total revenue: Rs %.2f%n", r.getRevenue());
+        System.out.println("Best seller  : " + r.getBestSeller() + " (" + r.getBestSellerQty() + " sold)");
     }
 }

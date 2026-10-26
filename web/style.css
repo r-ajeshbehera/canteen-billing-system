@@ -1,0 +1,95 @@
+:root {
+  --bg: #faf6f0;
+  --card: #ffffff;
+  --text: #2a2118;
+  --muted: #7a6d5f;
+  --line: #ece3d6;
+  --primary: #c8531a;
+  --primary-soft: #fbe9dd;
+  --green: #2f7d4f;
+  --green-soft: #e3f2e8;
+  --blue: #2d5f9a;
+  --blue-soft: #e4edf8;
+  --bad: #b3261e;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 "Segoe UI", system-ui, -apple-system, Arial, sans-serif; }
+h1, h2 { margin: 0; }
+h2 { font-size: 1.1rem; margin-bottom: 12px; }
+h2 small { font-weight: 400; color: var(--muted); font-size: .85rem; }
+
+.top { background: var(--primary); color: #fff; padding: 16px max(16px, 4vw) 0; }
+.brand { display: flex; gap: 12px; align-items: center; }
+.logo { background: #fff; color: var(--primary); font-weight: 800; border-radius: 10px; padding: 8px 10px; }
+.brand h1 { font-size: 1.35rem; }
+.brand p { margin: 0; opacity: .85; font-size: .9rem; }
+.tabs { display: flex; gap: 4px; margin-top: 14px; }
+.tabs button { background: transparent; color: #fff; border: 0; padding: 10px 16px; font: inherit; font-weight: 600; cursor: pointer; border-radius: 8px 8px 0 0; opacity: .85; }
+.tabs button.active { background: var(--bg); color: var(--primary); opacity: 1; }
+
+main { padding: 20px max(16px, 4vw) 40px; max-width: 1200px; margin: 0 auto; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; min-width: 0; }
+button { font: inherit; font-weight: 600; padding: 9px 14px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--text); cursor: pointer; }
+button.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.wide { width: 100%; }
+
+.layout { display: grid; grid-template-columns: 1fr 340px; gap: 18px; align-items: start; }
+@media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.chip { border-radius: 999px; padding: 6px 14px; font-size: .9rem; }
+.chip.active { background: var(--text); color: #fff; border-color: var(--text); }
+
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+.item { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 6px; }
+.item.in-cart { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+.item h3 { margin: 0; font-size: 1rem; }
+.item .price { font-size: 1.15rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.tag { display: inline-block; justify-self: start; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+.tag.Meal { background: var(--primary-soft); color: var(--primary); }
+.tag.Snack { background: var(--green-soft); color: var(--green); }
+.tag.Beverage { background: var(--blue-soft); color: var(--blue); }
+.stepper { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.stepper button { width: 34px; height: 34px; padding: 0; font-size: 1.1rem; }
+.stepper span { min-width: 22px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.cart { position: sticky; top: 16px; }
+.cart-lines { display: grid; gap: 8px; min-height: 60px; }
+.cart-line { display: flex; justify-content: space-between; gap: 8px; font-size: .95rem; }
+.cart-line small { color: var(--muted); }
+.empty { color: var(--muted); }
+.totals { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 14px 0 0; padding-top: 12px; border-top: 1px dashed var(--line); font-variant-numeric: tabular-nums; }
+.totals dd { margin: 0; text-align: right; }
+.totals .grand { font-weight: 800; font-size: 1.15rem; }
+.hint { color: var(--muted); font-size: .82rem; margin: 10px 0; }
+.center { text-align: center; }
+.cart-actions { display: grid; grid-template-columns: 1fr 2fr; gap: 8px; }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.stat b { display: block; font-size: 1.8rem; color: var(--primary); font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: .9rem; }
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: 150px 1fr 170px; gap: 10px; align-items: center; font-variant-numeric: tabular-nums; }
+.bar-track { background: var(--primary-soft); border-radius: 6px; height: 14px; overflow: hidden; }
+.bar-fill { background: var(--primary); height: 100%; border-radius: 6px; }
+.bar-row .val { text-align: right; color: var(--muted); font-size: .9rem; white-space: nowrap; }
+@media (max-width: 560px) { .bar-row { grid-template-columns: 90px 1fr 130px; } }
+
+.modal-back { position: fixed; inset: 0; background: rgba(30, 20, 10, .45); display: grid; place-items: center; padding: 16px; z-index: 20; }
+.bill { background: #fff; width: 100%; max-width: 380px; border-radius: 12px; padding: 22px; font-family: Consolas, "Courier New", monospace; max-height: 92vh; overflow-y: auto; }
+.bill-head { text-align: center; border-bottom: 1px dashed #999; padding-bottom: 10px; }
+.bill-head p { margin: 4px 0 8px; color: var(--muted); font-size: .85rem; }
+.token { display: inline-block; background: var(--text); color: #fff; padding: 6px 14px; border-radius: 8px; font-size: 1.1rem; }
+.token b { font-size: 1.5rem; }
+.bill-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: .9rem; }
+.bill-table th, .bill-table td { padding: 4px 2px; text-align: right; }
+.bill-table th:first-child, .bill-table td:first-child { text-align: left; }
+.bill-table th { border-bottom: 1px solid #ddd; font-weight: 700; }
+
+.toast { position: fixed; right: 16px; bottom: 16px; background: var(--text); color: #fff; padding: 12px 16px; border-radius: 10px; z-index: 30; max-width: 360px; }
+.toast.error { background: var(--bad); }
+.foot { text-align: center; color: var(--muted); font-size: .85rem; padding: 20px; }
